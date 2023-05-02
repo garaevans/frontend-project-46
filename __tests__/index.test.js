@@ -7,10 +7,7 @@ const __dirname = dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-test('compare flat json files', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
-  const expected = `{
+const expected = `{
   - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
@@ -19,5 +16,18 @@ test('compare flat json files', () => {
   + verbose: true
 }`;
 
-  expect(genDiff(filepath1, filepath2)).toBe(expected);
+describe('compare flat files', () => {
+  test('json', () => {
+    const filepath1 = getFixturePath('file1.json');
+    const filepath2 = getFixturePath('file2.json');
+
+    expect(genDiff(filepath1, filepath2)).toBe(expected);
+  });
+
+  test('yaml', () => {
+    const filepath1 = getFixturePath('file1.yml');
+    const filepath2 = getFixturePath('file2.yml');
+
+    expect(genDiff(filepath1, filepath2)).toBe(expected);
+  });
 });
