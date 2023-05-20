@@ -15,13 +15,16 @@ const yamlFile1 = getFixturePath('file1.yml');
 const yamlFile2 = getFixturePath('file2.yml');
 
 const expectedStylish = fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf-8');
+const expectedPlain = fs.readFileSync(getFixturePath('expectedPlain.txt'), 'utf-8');
 
 describe('generate difference', () => {
-  test('json files', () => {
+  test('stylish format', () => {
     expect(genDiff(jsonFile1, jsonFile2)).toBe(expectedStylish);
+    expect(genDiff(yamlFile1, yamlFile2)).toBe(expectedStylish);
   });
 
-  test('yaml files', () => {
-    expect(genDiff(yamlFile1, yamlFile2)).toBe(expectedStylish);
+  test('plain format', () => {
+    expect(genDiff(jsonFile1, jsonFile2, 'plain')).toBe(expectedPlain);
+    expect(genDiff(yamlFile1, yamlFile2, 'plain')).toBe(expectedPlain);
   });
 });
