@@ -16,6 +16,7 @@ const yamlFile2 = getFixturePath('file2.yml');
 
 const expectedStylish = fs.readFileSync(getFixturePath('expectedStylish.txt'), 'utf-8');
 const expectedPlain = fs.readFileSync(getFixturePath('expectedPlain.txt'), 'utf-8');
+const expectedJSON = fs.readFileSync(getFixturePath('expectedJSON.txt'), 'utf-8');
 
 describe('generate difference', () => {
   test('stylish format', () => {
@@ -26,5 +27,10 @@ describe('generate difference', () => {
   test('plain format', () => {
     expect(genDiff(jsonFile1, jsonFile2, 'plain')).toBe(expectedPlain);
     expect(genDiff(yamlFile1, yamlFile2, 'plain')).toBe(expectedPlain);
+  });
+
+  test('json format', () => {
+    expect(genDiff(jsonFile1, jsonFile2, 'json')).toBe(expectedJSON);
+    expect(genDiff(yamlFile1, yamlFile2, 'json')).toBe(expectedJSON);
   });
 });
