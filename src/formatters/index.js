@@ -7,6 +7,8 @@ const format = (data, formatter) => {
       return formatAsStylish(data);
     case 'plain':
       return formatAsPlain(data);
+    case 'json':
+      return JSON.stringify(data);
     default:
       throw new Error(`Unknown output format: ${formatter}`);
   }
