@@ -29,22 +29,22 @@ const formatAsStylish = (tree) => {
     const bracketIndent = space.repeat((depth - 1) * spacesCount);
 
     const lines = node.map(({
-      key, value, oldValue, newValue, type,
+      key, type, value, oldValue, newValue, children,
     }) => {
       switch (type) {
-        case 'added':
-          return `${shortIndent}+ ${key}: ${stringify(value, depth + 1)}`;
         case 'removed':
           return `${shortIndent}- ${key}: ${stringify(value, depth + 1)}`;
-        case 'changed':
+        case 'added':
+          return `${shortIndent}+ ${key}: ${stringify(value, depth + 1)}`;
+        case 'updated':
           return [
             `${shortIndent}- ${key}: ${stringify(oldValue, depth + 1)}`,
             `${shortIndent}+ ${key}: ${stringify(newValue, depth + 1)}`,
           ].join('\n');
         case 'unchanged':
           return `${indent}${key}: ${stringify(value, depth + 1)}`;
-        case 'nested':
-          return `${indent}${key}: ${iter(value, depth + 1)}`;
+        case 'hasChildren':
+          return `${indent}${key}: ${iter(children, depth + 1)}`;
         default:
           throw new Error(`Unknown node type: ${type}`);
       }
