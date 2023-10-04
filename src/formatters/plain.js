@@ -9,7 +9,7 @@ const stringify = (value) => {
     return `'${value}'`;
   }
 
-  return `${value}`;
+  return value;
 };
 
 const formatAsPlain = (tree) => {
@@ -28,7 +28,7 @@ const formatAsPlain = (tree) => {
           return `Property '${currentPath}' was updated. From ${stringify(oldValue)} to ${stringify(newValue)}`;
         case 'unchanged':
           return [];
-        case 'hasChildren':
+        case 'nested':
           return iter(children, currentPath);
         default:
           throw new Error(`Unknown node type: ${type}`);
