@@ -4,18 +4,20 @@ import parse from './parsers.js';
 import buildTree from './buildTree.js';
 import format from './formatters/index.js';
 
-const getAbsolutePath = (filepath) => path.resolve(process.cwd(), filepath);
-const getData = (filepath) => fs.readFileSync(filepath, 'utf-8');
-const getExtention = (filepath) => path.extname(filepath).slice(1);
+const getAbsolutePath = (filePath) => path.resolve(process.cwd(), filePath);
+const getData = (filePath) => fs.readFileSync(filePath, 'utf-8');
+const getExtension = (filePath) => path.extname(filePath).slice(1);
 
-export default (filepath1, filepath2, formatter = 'stylish') => {
-  const data1 = getData(getAbsolutePath(filepath1));
-  const data2 = getData(getAbsolutePath(filepath2));
+const genDiff = (filePath1, filePath2, formatter = 'stylish') => {
+  const data1 = getData(getAbsolutePath(filePath1));
+  const data2 = getData(getAbsolutePath(filePath2));
 
-  const obj1 = parse(data1, getExtention(filepath1));
-  const obj2 = parse(data2, getExtention(filepath2));
+  const object1 = parse(data1, getExtension(filePath1));
+  const object2 = parse(data2, getExtension(filePath2));
 
-  const tree = buildTree(obj1, obj2);
+  const tree = buildTree(object1, object2);
 
   return format(tree, formatter);
 };
+
+export default genDiff;
