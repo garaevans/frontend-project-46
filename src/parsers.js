@@ -1,6 +1,6 @@
 import yaml from 'js-yaml';
 
-export default (data, format) => {
+const parse = (data, format) => {
   switch (format) {
     case 'json':
       return JSON.parse(data);
@@ -11,3 +11,5 @@ export default (data, format) => {
       throw new Error(`Unknown data format: ${format}`);
   }
 };
+
+export default parse;
