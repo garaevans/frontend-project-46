@@ -14,24 +14,22 @@ const stringify = (value) => {
 
 const formatAsPlain = (tree) => {
   const iter = (node, parentPath) => {
-    const lines = node.flatMap(({
-      key, type, value, oldValue, newValue, children,
-    }) => {
-      const currentPath = parentPath ? `${parentPath}.${key}` : key;
+    const lines = node.flatMap((item) => {
+      const currentPath = parentPath ? `${parentPath}.${item.key}` : item.key;
 
-      switch (type) {
+      switch (item.type) {
         case 'removed':
           return `Property '${currentPath}' was removed`;
         case 'added':
-          return `Property '${currentPath}' was added with value: ${stringify(value)}`;
+          return `Property '${currentPath}' was added with value: ${stringify(item.value)}`;
         case 'updated':
-          return `Property '${currentPath}' was updated. From ${stringify(oldValue)} to ${stringify(newValue)}`;
+          return `Property '${currentPath}' was updated. From ${stringify(item.value1)} to ${stringify(item.value2)}`;
         case 'unchanged':
           return [];
         case 'nested':
-          return iter(children, currentPath);
+          return iter(item.children, currentPath);
         default:
-          throw new Error(`Unknown node type: ${type}`);
+          throw new Error(`Unknown node type: ${item.type}`);
       }
     });
 
