@@ -23,7 +23,7 @@ const buildTree = (data1, data2) => {
     }
 
     return {
-      key, type: 'updated', oldValue: data1[key], newValue: data2[key],
+      key, type: 'updated', value1: data1[key], value2: data2[key],
     };
   });
 };
